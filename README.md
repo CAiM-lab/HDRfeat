@@ -1,7 +1,7 @@
-# AHDRNet_plus
-<small> HDRfeat: A Feature-Rich Network for High Dynamic Range Image Reconstruction
+# HDRfeat
+<small> If you use the code, please cite the following publication, where the method is described and compared with others:
 
-Zhu, Lingkai, et al. "Hdrfeat: A feature-rich network for high dynamic range image reconstruction." arXiv preprint arXiv:2211.04238 (2022).
+[Lingkai Zhu, Fei Zhou, Bozhi Liu, Orcun Goksel: "HDRfeat: A Feature-Rich Network for High Dynamic Range Image Reconstruction" arXiv:2211.04238 (2022).](https://arxiv.org/abs/2211.04238)
 
 ## environment
 + Python 3.8
@@ -17,9 +17,8 @@ run script_test.py with HDRfeat_model.pkl to reproduce the results on the paper
 ## Citation
 @misc{zhu2022hdrfeat,
       title={HDRfeat: A Feature-Rich Network for High Dynamic Range Image Reconstruction}, 
-      author={Lingkai Zhu and Fei Zhou and Bozhi Liu and Orcun Göksel},
+      author={Lingkai Zhu and Fei Zhou and Bozhi Liu and Orcun Goksel},
       year={2022},
       eprint={2211.04238},
-      archivePrefix={arXiv},
-      primaryClass={eess.IV}
+      archivePrefix={arXiv}
 }

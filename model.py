@@ -41,8 +41,8 @@ class HDRfeat(nn.Module):
 
         # conv
         self.conv3 = nn.Conv2d(nFeat, 3, kernel_size=3, padding=1, bias=True)
-        # self.conv_down_concat = nn.Conv2d(nFeat*4, nFeat, kernel_size=3, padding=1, bias=True)
-        self.relu = nn.LeakyReLU()
+        self.relu = nn.LeakyReLU(inplace=True)
+        self.sigmoid = nn.Sigmoid()
 
     def forward(self, x1, x2, x3):
         F1_1 = self.relu(self.conv_enc1(x1))
@@ -58,35 +58,35 @@ class HDRfeat(nn.Module):
         F3_3 = self.relu(self.conv_enc3(F3_2))
 
         concat3 = torch.concat((F1_3, F2_3, F3_3), 1)
-        F_fuse3 = self.conv2__(concat3)
+        concat3 = self.conv2__(concat3)
 
-        concat2 = torch.concat((F1_2, F2_2, F3_2, F_fuse3), 1)
-        F_fuse2 = self.conv2_(concat2)
+        concat3 = torch.concat((F1_2, F2_2, F3_2, concat3), 1)
+        concat3 = self.conv2_(concat3)
 
         F1_i = torch.cat((F1_1, F2_1), 1)
-        F1_i_d = self.att12(F1_i)
-        F1_A = self.CBAM(F1_i_d)
-        F1_ = F1_1 * F1_A + F1_1 
+        F1_i = self.att12(F1_i)
+        F1_i = self.CBAM(F1_i)
+        F1_1 = F1_1 * F1_i + F1_1 
 
 
         F3_i = torch.cat((F3_1, F2_1), 1)
-        F3_i_d = self.att12(F3_i)
-        F3_A = self.CBAM(F3_i_d)
-        F3_ = F3_1 * F3_A + F3_1
+        F3_i = self.att12(F3_i)
+        F3_i = self.CBAM(F3_i)
+        F3_1= F3_1 * F3_i + F3_1
 
-        F_ = torch.cat((F1_, F2_1, F3_, F_fuse2), 1)
+        concat3 = torch.cat((F1_1, F2_1, F3_1, concat3), 1)
 
-        F_0 = self.conv2(F_)
-        F_1 = self.RFDB1(F_0)
+        concat3 = self.conv2(concat3)
+        F_1 = self.RFDB1(concat3)
         F_2 = self.RFDB2(F_1)
         F_3 = self.RFDB3(F_2)
-        FF = torch.cat((F_1, F_2, F_3), 1)
-        FdLF = self.GFF_1x1(FF) 
-        FGF = self.GFF_3x3(FdLF)
-        FDF = FGF + F2_1
-        us = self.conv_up(FDF)
+        output = torch.cat((F_1, F_2, F_3), 1)
+        output = self.GFF_1x1(output) 
+        output = self.GFF_3x3(output)
+        output = output + F2_1
+        output = self.conv_up(output)
 
-        output = self.conv3(us)
-        output = nn.functional.sigmoid(output)
+        output = self.conv3(output)
+        output = self.sigmoid(output)
 
         return output

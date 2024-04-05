@@ -146,7 +146,6 @@ class RFDB(nn.Module):
         self.act = activation('lrelu', neg_slope=0.05)
         self.c5 = conv_layer(self.dc*4, in_channels, 1)
         self.esa = ESA(in_channels, nn.Conv2d)
-        self.CBAM = CBAM(in_channels)
 
     def forward(self, input):
         distilled_c1 = self.act(self.c1_d(input))
@@ -165,8 +164,6 @@ class RFDB(nn.Module):
 
         out = torch.cat([distilled_c1, distilled_c2, distilled_c3, r_c4], dim=1)
         out_fused = self.esa(self.c5(out))
-        # out = self.c5(out)
-        # out_fused = self.CBAM(out) + out 
 
         return out_fused
 
