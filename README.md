@@ -9,7 +9,7 @@ with libraries in requirements.txt
 ## Data Download
 Train and test data is from https://cseweb.ucsd.edu/~viscomp/projects/SIG17HDR/
 ## Data Preprocessing
-Run script under ./GenerH5Data, prepare the train data location list 'train.txt' and test data location list 'test.txt'
+Run script under ./GenerH5Data, prepare the train data location list `train.txt` and test data location list `test.txt`
 ## Train 
 Run `python script_training.py`
 ## Test
