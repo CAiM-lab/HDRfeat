@@ -18,8 +18,6 @@ from skimage.metrics import peak_signal_noise_ratio as compare_psnr
 from skimage.metrics import structural_similarity as ssim
 from glob import glob
 
-from loss_function.MS_SSIML1 import *
-from loss_function.nt_xent import NTXentLoss
 import cv2
 import imageio
 from utils import AverageLoss
@@ -44,15 +42,9 @@ def model_restore(model, trained_model_dir):
 
 def model_restore_test(model, trained_model_dir, trained_model_filename):
     model_path = os.path.join(trained_model_dir, trained_model_filename)
-    state_dict = torch.load(model_path)
-    keys = []
-    for k, v in state_dict.items():
-        if k.startswith('projector'):
-            continue
-        keys.append(k)
-    state_dict = {k: state_dict[k] for k in keys}
-    model.load_state_dict(state_dict)
+    model.load_state_dict(torch.load(model_path))
     return model
+
 
 
 class data_loader(data.Dataset):
@@ -341,8 +333,8 @@ def testing_fun(model, test_loaders, args):
         cv2.imwrite('./result_tone_map/{}_ourmodel.png'.format(batch_idx), cv2.cvtColor(255*mu_pred, cv2.COLOR_RGB2BGR))
         cv2.imwrite('./result_tone_map/{}_label.png'.format(batch_idx), cv2.cvtColor(255*mu_label, cv2.COLOR_RGB2BGR))
         # save the hdr image
-        imageio.imwrite('./result/{}_ourmodel.hdr'.format(batch_idx), output, format='HDR-FI')
-        imageio.imwrite('./result/{}_label.hdr'.format(batch_idx), target, format='HDR-FI')
+        imageio.imwrite('./result_hdr/{}_ourmodel.hdr'.format(batch_idx), output, format='HDR-FI')
+        imageio.imwrite('./result_hdr/{}_label.hdr'.format(batch_idx), target, format='HDR-FI')
 
 def tone_mapping(x):
 	mu = 5000
