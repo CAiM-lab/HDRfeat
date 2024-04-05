@@ -15,7 +15,7 @@ Run `python script_training.py`
 ## Test
 Run `python script_test.py` with `HDRfeat_model.pkl` to reproduce the results on the paper
 ## Result
-15 Reconstructed HDR images are offered at `result_hdr.tar.gz`
+All Reconstructed HDR images are offered at `result_hdr.tar.gz`
 ## Evaluation
 Run `evaluate_metrics.m` to produce the metrics used in the paper
 ## Citation
