@@ -3,18 +3,23 @@
 
 [Lingkai Zhu, Fei Zhou, Bozhi Liu, Orcun Goksel: "HDRfeat: A Feature-Rich Network for High Dynamic Range Image Reconstruction" arXiv:2211.04238 (2022).](https://arxiv.org/abs/2211.04238)
 
-## environment
+## Environment
 + Python 3.8
 with libraries in requirements.txt
 ## Data Download
 Data is from https://cseweb.ucsd.edu/~viscomp/projects/SIG17HDR/
 ## Data Preprocessing
-run script under ./GenerH5Data, prepare the train data list train.txt and test data list test.txt
+Run script under ./GenerH5Data, prepare the train data list train.txt and test data list test.txt
 ## Train 
-run script_training.py
-## Test 
-run script_test.py with HDRfeat_model.pkl to reproduce the results on the paper
+Run 'script_training.py'
+## Test
+Run 'python script_test.py' with HDRfeat_model.pkl to reproduce the results on the paper
+## Result
+15 Reconstructed HDR images are offered at 'result_hdr.tar.gz'
+## Evaluation
+Run 'evaluate_metrics.m' to produce the metrics used in the paper.
 ## Citation
+'''
 @misc{zhu2022hdrfeat,
       title={HDRfeat: A Feature-Rich Network for High Dynamic Range Image Reconstruction}, 
       author={Lingkai Zhu and Fei Zhou and Bozhi Liu and Orcun Goksel},
@@ -22,3 +27,4 @@ run script_test.py with HDRfeat_model.pkl to reproduce the results on the paper
       eprint={2211.04238},
       archivePrefix={arXiv}
 }
+'''
