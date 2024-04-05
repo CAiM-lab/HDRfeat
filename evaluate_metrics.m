@@ -1,0 +1,32 @@
+predictfolder = '/mnt/asgard2/code/lingkai/caim03/lingkai/AHDRNet/final_code/result_hdr';
+psnr_mu_avg = 0;
+psnr_avg = 0;
+ssim_mu_avg = 0;
+ssim_avg = 0;
+dir = '/mnt/asgard2/code/lingkai/caim03/lingkai/AHDRNet/result_hdr'; %path to your result folder%
+average_Q = 0;
+average_l2 = 0
+for i = 0:14
+     T = slreportgen.utils.pathJoin(predictfolder, string(i)+"_ourmodel.hdr"); % name of result
+     R = slreportgen.utils.pathJoin(predictfolder, string(i)+"_label.hdr"); % name of label
+     T = hdrread(T);
+     R = hdrread(R);
+     ppd = hdrvdp_pix_per_deg(24, [3840 2160], 0.5);
+     res = hdrvdp(T, R, 'rgb-native', ppd);
+     l2 = mean((T - R).^2, 'all');
+     average_l2 = average_l2 + l2 ;
+     average_Q = average_Q + res.Q;
+     T_mu = log(1 + 5000 * T) / log(1 + 5000);
+     R_mu = log(1 + 5000 * R) / log(1 + 5000);
+     psnr_mu_avg = psnr_mu_avg + psnr(T_mu, R_mu);
+     psnr_avg = psnr_avg + psnr(T, R);
+     ssim_mu_avg = ssim_mu_avg + ssim(T_mu, R_mu);
+     ssim_avg = ssim_avg + ssim(T, R);
+end
+
+average_Q = average_Q / 15
+psnr_mu_avg = psnr_mu_avg / 15
+psnr_avg = psnr_avg / 15
+ssim_mu_avg = ssim_mu_avg / 15
+ssim_avg = ssim_avg / 15
+average_l2 = average_l2 / 15
