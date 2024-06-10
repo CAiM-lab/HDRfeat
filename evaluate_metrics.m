@@ -1,9 +1,8 @@
-predictfolder = '/mnt/asgard2/code/lingkai/caim03/lingkai/AHDRNet/final_code/result_hdr';
+predictfolder = 'path to your hdr files folder';
 psnr_mu_avg = 0;
 psnr_avg = 0;
 ssim_mu_avg = 0;
 ssim_avg = 0;
-dir = ''; %path to your result folder%
 average_Q = 0;
 average_l2 = 0
 for i = 0:14
